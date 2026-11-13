@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="aurora">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Magnetic Materials: Types and Applications</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       THEME COLOURS
+       Each theme just redefines the same set of variables.
+       ============================================================ */
+    :root {
+      --bg: #0e1024;
+      --card: #191d3b;
+      --tx: #eef0ff;
+      --mut: #a3aad6;
+      --a: #7c5cff;
+      --b: #00d4ff;
+      --c: #ff4fa3;
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    [data-theme=sunset] {
+      --bg: #2a0f1a;
+      --card: #3d1a2a;
+      --tx: #fff1ea;
+      --mut: #e3a999;
+      --a: #ff7a3d;
+      --b: #ffc53d;
+      --c: #ff3d7a;
+    }
+
+    [data-theme=forest] {
+      --bg: #0b1f16;
+      --card: #143225;
+      --tx: #e9fff3;
+      --mut: #8fc9aa;
+      --a: #2fd47c;
+      --b: #c6f24a;
+      --c: #00c9a7;
+    }
+
+    [data-theme=ocean] {
+      --bg: #e8f5ff;
+      --card: #ffffff;
+      --tx: #0b2540;
+      --mut: #476a8c;
+      --a: #0a84ff;
+      --b: #00b5b8;
+      --c: #6a5cff;
+    }
+
+    [data-theme=candy] {
+      --bg: #fff3fa;
+      --card: #ffffff;
+      --tx: #3a1550;
+      --mut: #865a9c;
+      --a: #ff2f9e;
+      --b: #ffa800;
+      --c: #7a3cff;
+    }
+
+    /* ============================================================
+       BASE STYLES
+       ============================================================ */
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: calc(70px + env(safe-area-inset-top, 0px));
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--tx);
+      font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+      line-height: 1.6;
+      transition: background .4s, color .4s;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0 0 auto;
+      height: env(safe-area-inset-top, 0px);
+      background: var(--bg);
+      z-index: 30;
+    }
+
+    /* ============================================================
+       HEADER, NAVIGATION AND THEME BUTTONS
+       ============================================================ */
+    header {
+      position: sticky;
+      top: env(safe-area-inset-top, 0px);
+      z-index: 20;
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(10px);
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 18px;
+      flex-wrap: wrap;
+    }
+
+    nav {
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      max-width: 100%;
+    }
+
+    nav a {
+      color: var(--mut);
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    nav a:hover,
+    nav a:focus-visible {
+      background: var(--card);
+      color: var(--tx);
+      outline: none;
+    }
+
+    .sw {
+      display: flex;
+      gap: 8px;
+    }
+
+    .sw button {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 2px solid var(--tx);
+      cursor: pointer;
+      transition: transform .2s;
+    }
+
+    .sw button:hover,
+    .sw button:focus-visible {
+      transform: scale(1.25);
+      outline: none;
+    }
+
+    /* ============================================================
+       SECTIONS AND TEXT
+       ============================================================ */
+    section,
+    .hero {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 56px 18px;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 8vw, 5rem);
+      line-height: 1;
+      margin: 0 0 16px;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--a), var(--b), var(--c));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    h2 {
+      font-size: clamp(1.7rem, 5vw, 2.6rem);
+      margin: 0 0 8px;
+      font-weight: 800;
+    }
+
+    p.lead {
+      color: var(--mut);
+      max-width: 62ch;
+      margin: 0 0 24px;
+    }
+
+    /* ============================================================
+       CARDS, GRID, CHIPS
+       ============================================================ */
+    .card {
+      background: var(--card);
+      border-radius: 18px;
+      padding: 20px;
+      border: 1px solid color-mix(in srgb, var(--tx) 12%, transparent);
+    }
+
+    .grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .chip {
+      display: inline-block;
+      background: color-mix(in srgb, var(--a) 22%, transparent);
+      color: var(--tx);
+      border-radius: 20px;
+      padding: 3px 12px;
+      font-size: 13px;
+      margin: 2px;
+    }
+
+    /* ============================================================
+       TAB AND FILTER BUTTONS
+       ============================================================ */
+    button.tab,
+    button.f {
+      font: inherit;
+      background: var(--card);
+      color: var(--tx);
+      border: 2px solid transparent;
+      border-radius: 24px;
+      padding: 7px 16px;
+      cursor: pointer;
+      margin: 3px;
+      transition: .2s;
+    }
+
+    button.tab.on,
+    button.f.on {
+      background: linear-gradient(90deg, var(--a), var(--c));
+      color: #fff;
+    }
+
+    button.tab:hover,
+    button.f:hover,
+    button:focus-visible {
+      border-color: var(--b);
+      outline: none;
+    }
+
+    /* ============================================================
+       ACCORDIONS (the open/close boxes)
+       ============================================================ */
+    .acc {
+      border-radius: 14px;
+      background: var(--card);
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+
+    .acc summary {
+      cursor: pointer;
+      padding: 14px 18px;
+      font-weight: 600;
+      list-style: none;
+    }
+
+    .acc summary::after {
+      content: "+";
+      float: right;
+      color: var(--b);
+      font-size: 20px;
+    }
+
+    .acc[open] summary::after {
+      content: "−";
+    }
+
+    .acc div {
+      padding: 0 18px 16px;
+      color: var(--mut);
+    }
+
+    .acc b,
+    .card b {
+      color: var(--tx);
+    }
+
+    /* ============================================================
+       SIMULATION: CANVAS, SLIDERS, BAR
+       ============================================================ */
+    canvas {
+      width: 100%;
+      background: color-mix(in srgb, var(--bg) 60%, var(--card));
+      border-radius: 14px;
+      display: block;
+    }
+
+    .ctl {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    input[type=range] {
+      width: 100%;
+      accent-color: var(--c);
+    }
+
+    .bar {
+      height: 12px;
+      border-radius: 8px;
+      background: color-mix(in srgb, var(--tx) 15%, transparent);
+      overflow: hidden;
+    }
+
+    .bar i {
+      display: block;
+      height: 100%;
+      width: 50%;
+      background: linear-gradient(90deg, var(--a), var(--b));
+      transition: width .15s;
+    }
+
+    /* ============================================================
+       MATERIALS TABLE
+       ============================================================ */
+    .wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 520px;
+      font-size: 14px;
+    }
+
+    th,
+    td {
+      padding: 9px 12px;
+      text-align: left;
+      border-bottom: 1px solid color-mix(in srgb, var(--tx) 12%, transparent);
+    }
+
+    th {
+      color: var(--b);
+    }
+
+    /* ============================================================
+       APPLICATION CARDS
+       ============================================================ */
+    .app {
+      cursor: pointer;
+      transition: transform .2s;
+    }
+
+    .app:hover {
+      transform: translateY(-4px);
+    }
+
+    .app .em {
+      font-size: 34px;
+    }
+
+    .app p {
+      display: none;
+      color: var(--mut);
+      margin: 8px 0 0;
+      font-size: 14px;
+    }
+
+    .app.open p {
+      display: block;
+    }
+
+    /* ============================================================
+       QUIZ OPTIONS
+       ============================================================ */
+    .opt {
+      display: block;
+      width: 100%;
+      text-align: left;
+      font: inherit;
+      color: var(--tx);
+      background: color-mix(in srgb, var(--tx) 8%, transparent);
+      border: 2px solid transparent;
+      border-radius: 12px;
+      padding: 10px 14px;
+      margin: 6px 0;
+      cursor: pointer;
+    }
+
+    .opt:hover {
+      border-color: var(--b);
+    }
+
+    .opt.ok {
+      background: #1fa95b;
+      color: #fff;
+    }
+
+    .opt.no {
+      background: #d6334d;
+      color: #fff;
+    }
+
+    /* ============================================================
+       SVG TEXT, FOOTER, REDUCED MOTION
+       ============================================================ */
+    svg text {
+      fill: var(--mut);
+      font-size: 11px;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--mut);
+      padding: 40px 18px;
+      font-size: 14px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+  <!-- ============================================================
+       HEADER: navigation links + theme colour buttons
+       ============================================================ -->
+  <header>
+    <nav>
+      <a href="#basics">Basics</a>
+      <a href="#types">Types</a>
+      <a href="#hyst">Hysteresis</a>
+      <a href="#materials">Materials</a>
+      <a href="#apps">Applications</a>
+      <a href="#quiz">Quiz</a>
+    </nav>
+
+    <div class="sw" id="sw" aria-label="Theme"></div>
+  </header>
+
+
+  <!-- ============================================================
+       HERO (title + stat cards)
+       ============================================================ -->
+  <div class="hero">
+    <h1>Magnetic Materials</h1>
+
+    <p class="lead">
+      Basic introduction, types and applications. Move the sliders, switch the theme,
+      and watch tiny atomic magnets decide whether a material becomes a fridge magnet,
+      a hard-drive head, or nothing at all.
+    </p>
+
+    <div id="stats" class="grid"></div>
+  </div>
+
+
+  <!-- ============================================================
+       SECTION 1: BASICS
+       ============================================================ -->
+  <section id="basics">
+    <h2>The basics</h2>
+    <p class="lead">Every magnetic effect starts with moving charge. Open each card.</p>
+    <div id="acc1"></div>
+  </section>
+
+
+  <!-- ============================================================
+       SECTION 2: TYPES (simulation + info + deeper topics)
+       ============================================================ -->
+  <section id="types">
+    <h2>Types of magnetic materials</h2>
+
+    <p class="lead">
+      Pick a type, then change the applied field and the temperature.
+      Arrows are atomic magnetic moments. (Transition temperature in this demo: 600 K.)
+    </p>
+
+    <div id="tabs"></div>
+
+    <div class="card" style="margin-top:10px">
+      <canvas id="cv" width="700" height="280" aria-label="Atomic moment simulation"></canvas>
+
+      <div class="ctl">
+        <label>
+          Applied field H: <b id="hv">0</b>
+          <input id="H" type="range" min="-100" max="100" value="0">
+        </label>
+
+        <label>
+          Temperature T: <b id="tv">300</b> K
+          <input id="T" type="range" min="0" max="1000" value="300">
+        </label>
+
+        <div>
+          Net magnetisation M
+          <div class="bar"><i id="mb"></i></div>
+          <small id="mt"></small>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="info" style="margin-top:14px"></div>
+
+    <h2 style="margin-top:40px">Going deeper</h2>
+    <div id="acc2"></div>
+  </section>
+
+
+  <!-- ============================================================
+       SECTION 3: HYSTERESIS LOOP
+       ============================================================ -->
+  <section id="hyst">
+    <h2>Hysteresis loop</h2>
+
+    <p class="lead">
+      Sweep the field back and forth and the magnetisation lags behind.
+      The enclosed area is the energy lost as heat in every cycle.
+    </p>
+
+    <div class="card">
+      <button class="tab on" data-h="soft">Soft magnet</button>
+      <button class="tab" data-h="hard">Hard magnet</button>
+
+      <svg id="hs" viewBox="0 0 320 300"
+           style="width:100%;max-width:520px;display:block;margin:auto"
+           role="img" aria-label="Hysteresis loop"></svg>
+
+      <p id="hn" style="color:var(--mut);text-align:center;margin:0"></p>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       SECTION 4: MATERIALS TABLE
+       ============================================================ -->
+  <section id="materials">
+    <h2>Materials at a glance</h2>
+    <p class="lead">Filter by type. Tc is the Curie temperature and TN the Néel temperature.</p>
+
+    <div id="mf"></div>
+
+    <div class="card wrap" style="margin-top:10px">
+      <table>
+        <thead>
+          <tr>
+            <th>Material</th>
+            <th>Type</th>
+            <th>Key value</th>
+            <th>Note</th>
+          </tr>
+        </thead>
+        <tbody id="mt2"></tbody>
+      </table>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       SECTION 5: APPLICATIONS
+       ============================================================ -->
+  <section id="apps">
+    <h2>Applications</h2>
+    <p class="lead">Tap a card to see how it works.</p>
+
+    <div id="af"></div>
+    <div id="ag" class="grid" style="margin-top:10px"></div>
+  </section>
+
+
+  <!-- ============================================================
+       SECTION 6: QUIZ
+       ============================================================ -->
+  <section id="quiz">
+    <h2>Quick quiz</h2>
+    <div class="card" id="qz"></div>
+  </section>
+
+
+  <!-- ============================================================
+       FOOTER (edit this line to add your group's names)
+       ============================================================ -->
+  <footer>Group 1 · Magnetic materials presentation</footer>
+
+
+  <script>
+    /* ============================================================
+       HELPER: shortcut for document.querySelector
+       ============================================================ */
+    const $ = s => document.querySelector(s);
+
+
+    /* ============================================================
+       THEME BUTTONS
+       Each entry is [theme name, button colour]
+       ============================================================ */
+    const TH = [
+      ["aurora", "#7c5cff"],
+      ["sunset", "#ff7a3d"],
+      ["forest", "#2fd47c"],
+      ["ocean",  "#0a84ff"],
+      ["candy",  "#ff2f9e"]
+    ];
+
+    TH.forEach(([n, c]) => {
+      const b = document.createElement("button");
+      b.style.background = c;
+      b.title = n;
+      b.setAttribute("aria-label", n + " theme");
+      b.onclick = () => {
+        document.documentElement.dataset.theme = n;
+        drawH();   // redraw hysteresis loop so it picks up the new colours
+      };
+      $("#sw").append(b);
+    });
+
+
+    /* ============================================================
+       STAT CARDS AT THE TOP
+       ============================================================ */
+    $("#stats").innerHTML = [
+      ["5",               "main types"],
+      ["10⁻⁴ to 10⁵",     "range of χ"],
+      ["1043 K",          "Curie point of iron"],
+      ["9.27×10⁻²⁴ A·m²", "Bohr magneton"]
+    ].map(([a, b]) => `
+      <div class="card">
+        <b style="font-size:1.5rem;color:var(--b)">${a}</b><br>
+        <span style="color:var(--mut)">${b}</span>
+      </div>
+    `).join("");
+
+
+    /* ============================================================
+       ACCORDION BUILDER
+       Takes a container id and a list of [title, html] pairs
+       ============================================================ */
+    const acc = (id, arr) => {
+      $(id).innerHTML = arr.map(([t, h]) => `
+        <details class="acc">
+          <summary>${t}</summary>
+          <div>${h}</div>
+        </details>
+      `).join("");
+    };
+
+
+    /* ============================================================
+       BASICS CONTENT
+       ============================================================ */
+    acc("#acc1", [
+      [
+        "What is magnetism?",
+        "Magnetism is a force produced by moving electric charges. A magnet has two poles (north and south) that cannot be separated; cutting a magnet only gives two smaller magnets. Like poles repel, unlike poles attract."
+      ],
+      [
+        "Origin: orbital, spin and nuclear moments",
+        "Three sources: <b>orbital motion</b> of electrons around the nucleus, <b>electron spin</b> (the strongest contribution in most materials) and the <b>nuclear spin</b> (about 1000 times weaker, used in NMR and MRI). Filled shells cancel out, so only atoms with <b>unpaired electrons</b> (like Fe, Co, Ni) have a net moment."
+      ],
+      [
+        "Magnetic dipole and moment",
+        "A tiny current loop or a spinning electron acts as a magnetic dipole with moment μ = I·A. The natural unit of atomic moment is the <b>Bohr magneton</b>, μB = eħ/2m = 9.274×10⁻²⁴ A·m². Iron carries about 2.2 μB per atom."
+      ],
+      [
+        "Key quantities and units",
+        "<b>B</b> flux density (tesla, T). <b>H</b> field strength (A/m). <b>M</b> magnetisation = moment per unit volume (A/m). <b>B = μ₀(H + M)</b> with μ₀ = 4π×10⁻⁷ H/m. <b>Susceptibility χ = M/H</b>. <b>Relative permeability μr = 1 + χ</b>. Flux Φ is measured in weber (Wb)."
+      ],
+      [
+        "How materials are classified",
+        "By the sign and size of χ and by how moments are ordered: diamagnetic (χ small and negative), paramagnetic (small and positive), ferromagnetic (large and positive, spontaneous order), antiferromagnetic (opposite moments cancel) and ferrimagnetic (opposite but unequal moments)."
+      ],
+      [
+        "Exchange interaction",
+        "A quantum effect, not ordinary magnetic attraction. When neighbouring atoms’ electron orbitals overlap, the Pauli exclusion principle makes parallel spins (ferromagnet) or antiparallel spins (antiferromagnet) energetically favoured. The exchange energy is much larger than the dipole-dipole energy, so it creates order up to hundreds of kelvin."
+      ]
+    ]);
+
+
+    /* ============================================================
+       "GOING DEEPER" CONTENT
+       ============================================================ */
+    acc("#acc2", [
+      [
+        "Magnetic domains and domain walls",
+        "A ferromagnet breaks into <b>domains</b>, regions where all moments point the same way. Neighbouring domains differ in direction, so an unmagnetised piece has zero net M. Applying a field makes favourable domains grow by <b>domain wall motion</b>, then the rest rotate. Walls are of <b>Bloch</b> type (spins rotate out of plane) or <b>Néel</b> type (in plane, thin films). Domains form to minimise magnetostatic energy."
+      ],
+      [
+        "Curie law, Curie-Weiss law, Néel temperature",
+        "Paramagnets: <b>χ = C/T</b> (Curie law). Ferromagnets above Tc: <b>χ = C/(T − θ)</b> (Curie-Weiss). Below the <b>Curie temperature Tc</b> a ferromagnet is ordered; above it, it turns paramagnetic. Antiferromagnets order below the <b>Néel temperature TN</b>, and χ peaks there. Diamagnetism is almost independent of temperature."
+        ],
+      [
+        "Magnetic anisotropy and magnetostriction",
+        "Magnetisation prefers certain crystal directions, the <b>easy axes</b> (Fe: &lt;100&gt;, Ni: &lt;111&gt;). Moving along a <b>hard axis</b> costs energy. <b>Magnetostriction</b> is a change in length when magnetised; it causes the hum of transformers."
+      ],
+      [
+        "Soft vs hard magnetic materials",
+        "<b>Soft</b>: low coercivity, narrow loop, high permeability, low loss (silicon steel, permalloy, soft ferrites). Used in transformers, inductors, electromagnets. <b>Hard</b>: high coercivity and remanence, wide loop (Alnico, NdFeB, SmCo, hard ferrites). Used as permanent magnets. Measure of quality: <b>(BH)max</b> energy product."
+      ],
+      [
+        "Hysteresis and eddy current losses",
+        "Hysteresis loss per cycle equals the loop area. <b>Eddy currents</b> are induced loops of current in conductors; they are cut by laminating cores or using insulating ferrites. Total core loss = hysteresis + eddy + residual loss."
+      ],
+      [
+        "Other magnetic behaviours",
+        "<b>Superparamagnetism</b>: nanoparticles small enough that thermal energy flips the whole moment (used in MRI contrast and drug delivery). <b>Spin glass</b>: frozen random spin order. <b>Helimagnetism</b>: spiral spin order. <b>Colossal and giant magnetoresistance (GMR)</b>: large resistance change in a field (hard-disk read heads, Nobel Prize 2007). <b>Multiferroics</b> couple magnetic and electric order. <b>Magnetocaloric effect</b>: temperature change when the field changes."
+      ],
+      [
+        "Magnetising and demagnetising",
+        "Magnetise by stroking, by placing in a strong field, or by passing current through a coil. Demagnetise by heating above Tc, by hammering, or by an alternating field that is slowly reduced to zero."
+      ]
+    ]);
+
+
+    /* ============================================================
+       MAGNETIC TYPES: INFO TEXT
+       n = name, chi = susceptibility, why = explanation,
+       ex = examples, tmp = temperature behaviour, use = uses
+       ============================================================ */
+    const TY = {
+      dia: {
+        n:   "Diamagnetic",
+        chi: "−10⁻⁶ to −10⁻⁵ (Bi −1.7×10⁻⁴)",
+        why: "All electrons paired, no permanent moment. A field induces moments that oppose it (Lenz’s law), so the material is weakly repelled.",
+        ex:  "Bismuth, copper, gold, silver, water, graphite, quartz. Superconductors are perfect diamagnets (χ = −1, the Meissner effect).",
+        tmp: "Independent of temperature.",
+        use: "Magnetic levitation of frogs and pyrolytic graphite, magnetic shielding."
+      },
+      para: {
+        n:   "Paramagnetic",
+        chi: "+10⁻⁵ to +10⁻³",
+        why: "Atoms have permanent moments but they point randomly. A field aligns a few of them; heat randomises them again.",
+        ex:  "Aluminium, platinum, magnesium, oxygen, sodium, MnSO₄.",
+        tmp: "Curie law χ = C/T: falls as temperature rises.",
+        use: "Cooling by adiabatic demagnetisation, MRI contrast agents (gadolinium)."
+      },
+      ferro: {
+        n:   "Ferromagnetic",
+        chi: "+10² to +10⁵ (large)",
+        why: "Exchange interaction locks neighbouring moments parallel. Domains form and a field aligns them, giving strong magnetisation that stays after the field is removed.",
+        ex:  "Iron, cobalt, nickel, gadolinium (below 292 K), Alnico, permalloy.",
+        tmp: "Ordered below Tc, paramagnetic above (Curie-Weiss law). Fe 1043 K, Co 1388 K, Ni 627 K.",
+        use: "Permanent magnets, transformers, motors, electromagnets, memory."
+      },
+      anti: {
+        n:   "Antiferromagnetic",
+        chi: "Small positive (10⁻⁵ to 10⁻²)",
+        why: "Neighbouring moments are equal and antiparallel, so they cancel. Net magnetisation is nearly zero.",
+        ex:  "MnO, FeO, NiO, Cr, α-Fe₂O₃ (hematite), MnF₂.",
+        tmp: "Ordered below TN (Néel temperature); χ peaks at TN then follows Curie-Weiss above.",
+        use: "Pinning layers in spin valves and GMR read heads, antiferromagnetic spintronics."
+      },
+      ferri: {
+        n:   "Ferrimagnetic",
+        chi: "Large positive (up to 10³)",
+        why: "Moments are antiparallel but of unequal size (two sublattices A and B), so a net moment remains. Behaves like a ferromagnet but is an insulator.",
+        ex:  "Magnetite Fe₃O₄ (lodestone), ferrites MFe₂O₄ (M = Mn, Zn, Ni, Co), garnets (YIG).",
+        tmp: "Ordered below Tc, may show a compensation point. Magnetite Tc = 858 K.",
+        use: "Transformer cores at high frequency, microwave devices, circulators, memory, EMI suppressors."
+      }
+    };
+
+    let cur = "ferro";   // currently selected type
+
+
+    /* ----- Build the tab buttons ----- */
+    $("#tabs").innerHTML = Object.entries(TY)
+      .map(([k, v]) => `<button class="tab" data-k="${k}">${v.n}</button>`)
+      .join("");
+
+
+    /* ----- Switch type: highlight the tab and fill the info card ----- */
+    function setT(k) {
+      cur = k;
+
+      document.querySelectorAll("#tabs .tab").forEach(b => {
+        b.classList.toggle("on", b.dataset.k == k);
+      });
+
+      const t = TY[k];
+
+      $("#info").innerHTML = `
+        <h3 style="margin:0 0 8px;color:var(--b)">${t.n}</h3>
+        <p><b>Susceptibility χ:</b> ${t.chi}</p>
+        <p><b>Why:</b> ${t.why}</p>
+        <p><b>Examples:</b> ${t.ex}</p>
+        <p><b>Temperature:</b> ${t.tmp}</p>
+        <p><b>Uses:</b> ${t.use}</p>
+      `;
+    }
+
+    $("#tabs").onclick = e => {
+      if (e.target.dataset.k) setT(e.target.dataset.k);
+    };
+
+    setT("ferro");
+
+
+    /* ============================================================
+       ATOMIC MOMENT SIMULATION (canvas)
+       ============================================================ */
+    const cv   = $("#cv");
+    const cx   = cv.getContext("2d");
+    const COLS = 10;
+    const ROWS = 4;
+    const N    = COLS * ROWS;
+
+    // R  = a fixed random number per arrow
+    // PH = a random phase per arrow (for the wobble)
+    const R  = Array.from({ length: N }, Math.random);
+    const PH = Array.from({ length: N }, () => Math.random() * 6.28);
+
+    // Read a CSS variable (like --a) from the current theme
+    const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+
+    /* ----- Draw one arrow: centre (x,y), angle a, length L, colour, width ----- */
+    function arrow(x, y, a, L, col, w) {
+      const dx = Math.cos(a) * L / 2;
+      const dy = -Math.sin(a) * L / 2;
+
+      cx.strokeStyle = cx.fillStyle = col;
+      cx.lineWidth = w;
+
+      // the shaft
+      cx.beginPath();
+      cx.moveTo(x - dx, y - dy);
+      cx.lineTo(x + dx, y + dy);
+      cx.stroke();
+
+      // the arrow head
+      const h = Math.min(11, L * .5);
+      const b = Math.atan2(dy, dx);
+
+      cx.beginPath();
+      cx.moveTo(x + dx, y + dy);
+      cx.lineTo(x + dx - h * Math.cos(b - .5), y + dy - h * Math.sin(b - .5));
+      cx.lineTo(x + dx - h * Math.cos(b + .5), y + dy - h * Math.sin(b + .5));
+      cx.fill();
+    }
+
+
+    /* ----- Runs every animation frame ----- */
+    function frame(t) {
+      const h       = $("#H").value / 100;      // field, from -1 to +1
+      const T       = +$("#T").value;           // temperature in K
+      const k       = T / 1000;                 // temperature as 0 to 1
+      const ordered = T < 600;                  // below the transition temperature?
+
+      $("#hv").textContent = Math.round(h * 100);
+      $("#tv").textContent = T;
+
+      cx.clearRect(0, 0, 700, 280);
+
+      const cw = 700 / COLS;                    // cell width
+      const ch = 280 / ROWS;                    // cell height
+      const d  = h >= 0 ? 0 : Math.PI;          // direction of the applied field
+      const ah = Math.abs(h);                   // strength of the field
+      let net  = 0;                             // running total for net magnetisation
+
+      const A = css("--a");
+      const B = css("--b");
+      const C = css("--c");
+
+      for (let i = 0; i < N; i++) {
+        const c = i % COLS;                     // column
+        const r = (i / COLS) | 0;               // row
+        const x = cw * (c + .5);
+        const y = ch * (r + .5);
+
+        let ang;                                // arrow angle
+        let len = 1;                            // arrow length (1 = full)
+        let wob = Math.sin(t / 300 + PH[i]) * (.12 + k * .9);   // thermal wobble
+
+        // Random-ish angle used by paramagnets (and everything above the transition)
+        const para = () =>
+          d +
+          (R[i] - .5) * 6.28 * (1 - Math.min(1, ah * (1.3 - k))) +
+          wob +
+          (ah == 0 ? (R[i] * 6.28) : 0);
+
+        if (cur == "dia") {
+          // Diamagnetic: small arrows pointing AGAINST the field
+          len = ah * .55;
+          ang = d + Math.PI;
+
+          // no field = just draw dots
+          if (len < .04) {
+            cx.fillStyle = B;
+            cx.beginPath();
+            cx.arc(x, y, 4, 0, 6.28);
+            cx.fill();
+            continue;
+          }
+        }
+        else if (cur == "para" || !ordered) {
+          // Paramagnetic, or any material above its transition temperature
+          ang = para();
+        }
+        else if (cur == "ferro") {
+          // Ferromagnetic: two domains (left/right), the field pulls arrows into line
+          const dom = c < COLS / 2 ? 0 : Math.PI;
+          ang = (R[i] < ah * 1.6 ? d : dom) + wob * .5;
+        }
+        else if (cur == "anti") {
+          // Antiferromagnetic: alternating up/down, equal size
+          ang = ((r + c) % 2 ? 0 : Math.PI) + h * .25 + wob * .4;
+        }
+        else {
+          // Ferrimagnetic: alternating up/down, UNEQUAL size
+          len = (r + c) % 2 ? 1 : .55;
+          ang = ((r + c) % 2 ? 0 : Math.PI) + wob * .4;
+        }
+
+        if (cur == "dia" && k > 9) ang = 0;
+
+        net += Math.cos(ang) * len;
+
+        arrow(x, y, ang, cw * .62 * len, (r + c) % 2 ? B : C, 3);
+      }
+
+      // Update the net magnetisation bar and text
+      const m = net / N;
+
+      $("#mb").style.width = Math.min(100, Math.abs(m) * 100) + "%";
+
+      $("#mt").textContent =
+        (m >= 0 ? "+" : "−") +
+        Math.abs(m).toFixed(2) +
+        (ordered && cur != "dia" && cur != "para" ? "  (ordered phase)" : "");
+
+      requestAnimationFrame(frame);
+    }
+
+    requestAnimationFrame(frame);
+
+
+    /* ============================================================
+       HYSTERESIS LOOP
+       hc = coercivity, s = how sharply the loop turns
+       ============================================================ */
+    let hk = "soft";    // which magnet is selected
+    let ph = 0;         // animation phase of the moving dot
+
+    const HP = {
+      soft: {
+        hc: 8,
+        s: 22,
+        n: "Soft: tiny coercivity Hc, small loop area, so very low loss. Ideal for transformer cores and inductors."
+      },
+      hard: {
+        hc: 70,
+        s: 45,
+        n: "Hard: large coercivity Hc and remanence Br, huge loop area. Hard to demagnetise, ideal for permanent magnets."
+      }
+    };
+
+
+    /* ----- Draw the loop (also called again when the theme changes) ----- */
+    function drawH() {
+      const p  = HP[hk];
+      const ms = 110;         // saturation height
+
+      let up = "";            // upper curve (field decreasing)
+      let dn = "";            // lower curve (field increasing)
+
+      for (let H = 140; H >= -140; H -= 4) {
+        up += (up ? "L" : "M") + (160 + H) + " " + (150 - ms * Math.tanh((H + p.hc) / p.s));
+      }
+
+      for (let H = -140; H <= 140; H += 4) {
+        dn += (dn ? "L" : "M") + (160 + H) + " " + (150 - ms * Math.tanh((H - p.hc) / p.s));
+      }
+
+      $("#hs").innerHTML = `
+        <line x1="10" y1="150" x2="310" y2="150" stroke="var(--mut)"/>
+        <line x1="160" y1="10" x2="160" y2="290" stroke="var(--mut)"/>
+        <text x="292" y="143">H</text>
+        <text x="166" y="20">M</text>
+
+        <path d="${up}L${dn.replace("M", "L")}Z" fill="var(--a)" opacity=".25"/>
+        <path d="${up}" fill="none" stroke="var(--c)" stroke-width="3"/>
+        <path d="${dn}" fill="none" stroke="var(--b)" stroke-width="3"/>
+
+        <text x="${160 + p.hc + 4}" y="164">Hc</text>
+        <text x="166" y="${150 - ms * Math.tanh(p.hc / p.s) - 4}">Br</text>
+        <text x="${160 + 120}" y="${150 - ms - 8}">Ms</text>
+
+        <circle id="dot" r="7" fill="var(--tx)"/>
+      `;
+
+      $("#hn").textContent = HP[hk].n;
+    }
+
+
+    /* ----- Soft / Hard buttons ----- */
+    document.querySelector("#hyst").onclick = e => {
+      if (e.target.dataset.h) {
+        hk = e.target.dataset.h;
+
+        document.querySelectorAll("#hyst .tab").forEach(b => {
+          b.classList.toggle("on", b === e.target);
+        });
+
+        drawH();
+      }
+    };
+
+
+    /* ----- Moving dot that travels around the loop ----- */
+    (function sw() {
+      ph += .018;
+
+      const p   = HP[hk];
+      const H   = 140 * Math.cos(ph);
+      const dec = Math.sin(ph) < 0 ? false : true;
+      const M   = 110 * Math.tanh((H + (dec ? p.hc : -p.hc)) / p.s);
+      const d   = $("#dot");
+
+      if (d) {
+        d.setAttribute("cx", 160 + H);
+        d.setAttribute("cy", 150 - M);
+      }
+
+      requestAnimationFrame(sw);
+    })();
+
+    drawH();
+
+
+    /* ============================================================
+       MATERIALS TABLE
+       Each row: [name, type, key value, note]
+       ============================================================ */
+    const MT = [
+      ["Iron (Fe)",         "ferro", "Tc = 1043 K",          "Soft; main ingredient of steels"],
+      ["Cobalt (Co)",       "ferro", "Tc = 1388 K",          "Highest Curie point of the elements"],
+      ["Nickel (Ni)",       "ferro", "Tc = 627 K",           "Used in alloys like permalloy"],
+      ["Gadolinium",        "ferro", "Tc = 292 K",           "Ferromagnetic only near room temperature"],
+      ["Silicon steel",     "soft",  "μr ≈ 5000",            "Transformer and motor cores"],
+      ["Permalloy (Ni-Fe)", "soft",  "μr up to 10⁵",         "Shielding, sensors"],
+      ["MnZn ferrite",      "soft",  "μr ≈ 2000",            "High-frequency inductors"],
+      ["Alnico",            "hard",  "(BH)max ≈ 40 kJ/m³",   "Guitar pickups, sensors"],
+      ["SmCo",              "hard",  "Tc ≈ 1000 K",          "Stable at high temperature"],
+      ["NdFeB",             "hard",  "(BH)max ≈ 400 kJ/m³",  "Strongest commercial magnet"],
+      ["Magnetite Fe₃O₄",   "ferri", "Tc = 858 K",           "Natural lodestone"],
+      ["YIG garnet",        "ferri", "Tc = 560 K",           "Microwave devices"],
+      ["MnO",               "anti",  "TN = 116 K",           "Classic antiferromagnet"],
+      ["Chromium",          "anti",  "TN = 311 K",           "Only elemental AFM at room temp."],
+      ["Aluminium",         "para",  "χ = +2.2×10⁻⁵",        "Weakly attracted"],
+      ["Oxygen (liquid)",   "para",  "χ = +3.6×10⁻³",        "Sticks between magnet poles"],
+      ["Bismuth",           "dia",   "χ = −1.7×10⁻⁴",        "Strongest diamagnetic element"],
+      ["Water",             "dia",   "χ = −9×10⁻⁶",          "Why frogs can levitate"]
+    ];
+
+    // Filter button labels
+    const MN = {
+      all:   "All",
+      ferro: "Ferro",
+      ferri: "Ferri",
+      anti:  "Antiferro",
+      para:  "Para",
+      dia:   "Dia",
+      soft:  "Soft",
+      hard:  "Hard"
+    };
+
+    // Build the filter buttons (first one starts highlighted)
+    $("#mf").innerHTML = Object.entries(MN)
+      .map(([k, v], i) => `<button class="f${i ? "" : " on"}" data-k="${k}">${v}</button>`)
+      .join("");
+
+    // Build the table rows for a chosen filter
+    function rM(k) {
+      $("#mt2").innerHTML = MT
+        .filter(r => k == "all" || r[1] == k)
+        .map(r => `
+          <tr>
+            <td><b>${r[0]}</b></td>
+            <td><span class="chip">${MN[r[1]]}</span></td>
+            <td>${r[2]}</td>
+            <td>${r[3]}</td>
+          </tr>
+        `)
+        .join("");
+    }
+
+    $("#mf").onclick = e => {
+      if (e.target.dataset.k) {
+        document.querySelectorAll("#mf .f").forEach(b => {
+          b.classList.toggle("on", b === e.target);
+        });
+        rM(e.target.dataset.k);
+      }
+    };
+
+    rM("all");
+
+
+    /* ============================================================
+       APPLICATIONS
+       Each item: [emoji, title, category, description]
+       ============================================================ */
+    const AP = [
+      ["💾", "Data storage",                  "info",   "Hard disks store bits as tiny magnetised regions. GMR/TMR read heads sense them; magnetic tape and card stripes work similarly."],
+      ["⚙️", "Electric motors and generators", "power",  "Permanent magnets (NdFeB) in EV motors and wind turbines; soft iron cores guide the flux."],
+      ["🔌", "Transformers and inductors",    "power",  "Laminated silicon steel or ferrite cores carry flux with minimal hysteresis loss."],
+      ["🏥", "MRI scanners",                  "health", "Superconducting electromagnets give 1.5 to 7 T; paramagnetic gadolinium improves contrast."],
+      ["🧲", "Targeted drug delivery",        "health", "Superparamagnetic iron oxide nanoparticles are steered by an external magnet; also used for hyperthermia treatment."],
+      ["🚄", "Maglev trains",                 "power",  "Magnetic levitation and propulsion remove friction; speeds above 600 km/h reached."],
+      ["📡", "Microwave devices",             "info",   "Ferrite circulators, isolators and phase shifters in radar and telecom."],
+      ["🧭", "Sensors and compasses",         "info",   "Hall, fluxgate and magnetoresistive sensors in phones, cars and navigation."],
+      ["🔊", "Speakers and microphones",      "info",   "A voice coil moving in a permanent magnet’s field turns current into sound."],
+      ["♻️", "Magnetic separation",           "power",  "Electromagnets sort iron and steel from scrap and purify ores."],
+      ["🧊", "Magnetic refrigeration",        "power",  "The magnetocaloric effect (Gd) can cool without compressors or harmful gases."],
+      ["🧠", "Spintronics and MRAM",          "info",   "Uses electron spin as well as charge for fast, non-volatile memory."]
+    ];
+
+    // Filter button labels
+    const AF = {
+      all:    "All",
+      power:  "Energy and industry",
+      info:   "Electronics and data",
+      health: "Health"
+    };
+
+    $("#af").innerHTML = Object.entries(AF)
+      .map(([k, v], i) => `<button class="f${i ? "" : " on"}" data-k="${k}">${v}</button>`)
+      .join("");
+
+    // Build the application cards for a chosen filter
+    function rA(k) {
+      $("#ag").innerHTML = AP
+        .filter(a => k == "all" || a[2] == k)
+        .map(a => `
+          <div class="card app" tabindex="0">
+            <div class="em">${a[0]}</div>
+            <b>${a[1]}</b>
+            <p>${a[3]}</p>
+          </div>
+        `)
+        .join("");
+    }
+
+    $("#af").onclick = e => {
+      if (e.target.dataset.k) {
+        document.querySelectorAll("#af .f").forEach(b => {
+          b.classList.toggle("on", b === e.target);
+        });
+        rA(e.target.dataset.k);
+      }
+    };
+
+    // Click a card to open or close its description
+    $("#ag").onclick = e => {
+      const c = e.target.closest(".app");
+      if (c) c.classList.toggle("open");
+    };
+
+    // Same thing with the Enter key (keyboard users)
+    $("#ag").onkeydown = e => {
+      if (e.key == "Enter") {
+        const c = e.target.closest(".app");
+        if (c) c.classList.toggle("open");
+      }
+    };
+
+    rA("all");
+
+
+    /* ============================================================
+       QUIZ
+       Each question: [question, [options], index of correct option]
+       ============================================================ */
+    const Q = [
+      [
+        "Which type has all electrons paired and is weakly repelled by a field?",
+        ["Paramagnetic", "Diamagnetic", "Ferromagnetic"],
+        1
+      ],
+      [
+        "What happens to a ferromagnet above its Curie temperature?",
+        ["It becomes paramagnetic", "It becomes diamagnetic", "It becomes stronger"],
+        0
+      ],
+      [
+        "Which has antiparallel moments of unequal size?",
+        ["Antiferromagnetic", "Ferrimagnetic", "Paramagnetic"],
+        1
+      ],
+      [
+        "A permanent magnet needs…",
+        ["Low coercivity", "High coercivity and remanence", "Zero hysteresis"],
+        1
+      ],
+      [
+        "Which is the SI unit of magnetic flux density B?",
+        ["Weber", "Tesla", "Ampere per metre"],
+        1
+      ]
+    ];
+
+    let qi = 0;    // current question number
+    let sc = 0;    // score
+
+
+    /* ----- Show the current question, or the final score ----- */
+    function rQ() {
+      const q = Q[qi];
+
+      if (!q) {
+        $("#qz").innerHTML = `
+          <h3>Score: ${sc} / ${Q.length}</h3>
+          <button class="tab on" onclick="qi=0;sc=0;rQ()">Try again</button>
+        `;
+        return;
+      }
+
+      $("#qz").innerHTML =
+        `<p style="color:var(--mut)">Question ${qi + 1} of ${Q.length}</p>` +
+        `<h3 style="margin-top:0">${q[0]}</h3>` +
+        q[1].map((o, i) => `<button class="opt" data-i="${i}">${o}</button>`).join("");
+    }
+
+
+    /* ----- When an answer is clicked ----- */
+    $("#qz").onclick = e => {
+      const i = e.target.dataset.i;
+
+      // ignore clicks that are not on an option, or on an already-marked option
+      if (i == null || e.target.classList.contains("ok") || e.target.classList.contains("no")) return;
+
+      const q = Q[qi];
+
+      // ignore clicks while the correct answer is already showing
+      if (document.querySelector(".opt.ok")) return;
+
+      const bs = document.querySelectorAll(".opt");
+
+      // always highlight the correct answer in green
+      bs[q[2]].classList.add("ok");
+
+      if (+i == q[2]) {
+        sc++;                              // correct
+      } else {
+        e.target.classList.add("no");      // wrong: highlight in red
+      }
+
+      // move to the next question after a short pause
+      setTimeout(() => {
+        qi++;
+        rQ();
+      }, 1100);
+    };
+
+    rQ();
+  </script>
+
+</body>
+</html>
